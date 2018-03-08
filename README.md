@@ -1,4 +1,4 @@
-# CS420_AI_ClassCompetition
+# Connect Four AI
 AI program utilizing MiniMax created by Jacob Lepere and Tho Nguyen to play a modified version of Connect 4. The game will end when one player gets 4 in a row, either horizontally or vertically. We will not consider any diagonals.
 
 # Before Compiling Setup
