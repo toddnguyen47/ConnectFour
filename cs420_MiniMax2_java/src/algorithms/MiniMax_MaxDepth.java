@@ -38,11 +38,15 @@ public class MiniMax_MaxDepth {
 				move = MiniMax(LARGE_NEG, LARGE_POS, 0, prevRow, prevCol);
 				endTime = System.currentTimeMillis();
 				
-				System.out.println("ply: " + (curMaxDepth) + ", time: " + 
-						getTimeDifference(startTime, endTime) / 1000.0 + " sec, " + nodesGen);
-				
-				if (endTime - startTime >= maxTime || curMaxDepth >= 8)
+				if (endTime - startTime >= maxTime || curMaxDepth >= 8) {
+					System.out.println("Time elapsed: " + getTimeDiff(startTime, endTime) / 1000.0 +
+							" sec");
 					return new int[] {returnMove[0], returnMove[1]};
+				}
+				
+				System.out.println("ply: " + (curMaxDepth) + ", time: " + 
+						getTimeDiff(startTime, endTime) / 1000.0 + " sec, " + 
+						nodesGen + " nodes generated");
 				
 				curMaxDepth++;
 				returnMove[0] = move[1];
@@ -135,7 +139,7 @@ public class MiniMax_MaxDepth {
 		return mainBoard.isTerminalBoard();
 	}
 	
-	public long getTimeDifference(long startTime, long endTime) {
+	public long getTimeDiff(long startTime, long endTime) {
 		return endTime - startTime;
 	}
 	
@@ -148,6 +152,7 @@ public class MiniMax_MaxDepth {
 		
 		int[][] orderedList = new int[successorsSize][successorsSize];
 		int orderedListIndex = 0;
+		int nonZeroCounter = 0;
 		
 		// Get scores
 		for (int i = 0; i < successorsSize; i++) {
@@ -167,6 +172,8 @@ public class MiniMax_MaxDepth {
 				if (mainBoard.maxTurn()) score[i] += randomNum;
 				else score[i] -= randomNum;
 			}
+			
+			if (score[i] != 0) {nonZeroCounter++;}
 		}
 		
 		// Organize scores

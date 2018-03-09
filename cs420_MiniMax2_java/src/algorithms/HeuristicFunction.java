@@ -23,12 +23,14 @@ public class HeuristicFunction {
 		maxWinner += winnerOrLoser(board, depth);
 		maxPCounter += killerMoves(board, depth);
 		maxPCounter += oneAway(board, depth);
+		maxPCounter += oneAwayFromKillerMove(board, depth);
 		
 		board = flipBoard(board);
 		
 		minWinner -= winnerOrLoser(board, depth);
 		minPCounter -= killerMoves(board, depth);
 		minPCounter -= oneAway(board, depth);
+		minPCounter -= oneAwayFromKillerMove(board, depth);
 		
 		board = flipBoard(board); // reset board
 		
@@ -204,11 +206,11 @@ public class HeuristicFunction {
 				}
 				
 				// col test --XX-
-				if (j < Board.BOARD_SIZE - 4 && board[i][j] == 0 &&
+				if (i < Board.BOARD_SIZE - 4 && board[i][j] == 0 &&
 						board[i+4][j] == 0 &&
 						board[i+1][j] == 0 &&
 						board[i+2][j] != 0 &&
-						board[i+2][j] == board[i][j+3]
+						board[i+2][j] == board[i+3][j]
 						) {
 					
 					if (board[i+2][j] == Board.PLAYER_MAX) counter ++;
