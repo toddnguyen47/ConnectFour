@@ -75,9 +75,20 @@ public class Board {
 	}
 	
 	public void printBoard() {
-		System.out.println("  0 1 2 3 4 5 6 7");
+		System.out.println("      C o l u m n");
+		System.out.println("    0 1 2 3 4 5 6 7");
 		for (int i = 0; i < BOARD_SIZE; i++) {
-			System.out.print(i + " ");
+			if (i == 2) {
+				System.out.print("R " + i + " ");
+			} else if (i == 3) {
+				System.out.print("o " + i + " ");
+			} else if (i == 4) {
+				System.out.print("w " + i + " ");
+			}
+			else {
+				System.out.print("  " + i + " ");
+			}
+			
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				if (board[i][j] == PLAYER_MIN) {System.out.print("X ");}
 				else if (board[i][j] == PLAYER_MAX) {System.out.print("O ");}
