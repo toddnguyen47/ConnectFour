@@ -28,17 +28,10 @@ public class MiniMax_MaxDepth {
 		
 		int numPieces = mainBoard.getNumOfPiecesPlayed();
 		if (numPieces < 3) {
-			int moves[][] = {{3,3}, {3,4}, {4,3}, {4,4}};
-			int[] returnMove;
-			boolean validMove = false;
-			do {
-				int randomNum = ThreadLocalRandom.current().nextInt(0, 4);
-				returnMove = moves[randomNum];
-				validMove = mainBoard.isValidMove(returnMove[0], returnMove[1]);
-			} while (!validMove);
-			return returnMove;
+			return randomStartingMoves(prevRow, prevCol);
 		}
 		else {
+			// Begin Iterative Deepening
 			int[] returnMove = new int[2];
 			while (true) {
 				nodesGen = 0;
@@ -56,6 +49,29 @@ public class MiniMax_MaxDepth {
 				returnMove[1] = move[2];
 			}
 		}
+	}
+	
+	private int[] randomStartingMoves(int prevRow, int prevCol) {
+		int moves[][];
+		// If prevMov and prevCol was NOT in the center
+		if (prevRow < 3 || prevRow > 4 || prevCol < 3 || prevCol > 4) {
+			moves= new int[][] {{3,3}, {3,4}, {4,3}, {4,4}};
+		}
+		// If prevMov and prevCol WAS in the center
+		else {
+			moves = new int[][]{{prevRow, prevCol + 1},
+							 {prevRow, prevCol -1},
+							 {prevRow + 1, prevCol},
+							 {prevRow - 1, prevCol}};
+		}
+		int[] returnMove;
+		boolean validMove = false;
+		do {
+			int randomNum = ThreadLocalRandom.current().nextInt(0, 4);
+			returnMove = moves[randomNum];
+			validMove = mainBoard.isValidMove(returnMove[0], returnMove[1]);
+		} while (!validMove);
+		return returnMove;
 	}
 	
 	private int[] MiniMax(int alpha, int beta, int depth, int prevRow, int prevCol) {
@@ -142,8 +158,11 @@ public class MiniMax_MaxDepth {
 			mainBoard.resetBoard(row, col);
 			scoreTaken[i] = false; // reset scoreValid array
 			
-			if (score[i] == 0 && mainBoard.getNumOfPiecesPlayed() < 6 && row >= 3 &&
-					row <= 5 && col >= 3 && col <= 4) {
+			if (score[i] == 0 && mainBoard.getNumOfPiecesPlayed() < 6 &&
+					row >= 3 && row <= 5 &&
+					col >= 3 && col <= 4 &&
+					prevRow < 3 && prevRow > 4 &&
+					prevCol < 3 && prevCol > 4) {
 				int randomNum = ThreadLocalRandom.current().nextInt(20, 51);
 				if (mainBoard.maxTurn()) score[i] += randomNum;
 				else score[i] -= randomNum;
