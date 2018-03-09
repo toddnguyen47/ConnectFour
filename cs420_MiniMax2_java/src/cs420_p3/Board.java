@@ -155,10 +155,7 @@ public class Board {
 	}
 	
 	public boolean isValidMove(int row, int col) {
-		if (board[row][col] == 0)
-			return true;
-		
-		return false;
+		return (board[row][col] == 0);
 	}
 	
 	public void flipBoard() {
