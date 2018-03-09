@@ -14,8 +14,8 @@ public class MainClass {
 	public MainClass() {
 		sc = new Scanner(System.in);
 		move = new int[2];
-		move[0] = 3;
-		move[1] = 4;
+		move[0] = 0; // first and second moves are "hard coded"
+		move[1] = 0; // first and second moves are "hard coded"
 		board = Board.getInstance();
 		mm_maxDepth = new MiniMax_MaxDepth(getSeconds());
 		
@@ -51,7 +51,11 @@ public class MainClass {
 		}
 		System.out.println("");
 		board.printBoard();
-		System.out.println("Game ends!");
+		if (!board.maxTurn()) {
+			System.out.println("Our AI won!");
+		} else {
+			System.out.println("Their AI won... better luck next time.");
+		}
 	}
 	
 	private int[] getMove() {
