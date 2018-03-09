@@ -101,17 +101,19 @@ public class HeuristicFunction {
 						board[i][j] == board[i][j+2] && board[i][j] == board[i][j+3]
 						) {
 					
-					if (board[i][j] == Board.PLAYER_MAX) counter += winningValue;
+					if (board[i][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Col test
 				if (i < Board.BOARD_SIZE - 3 && board[i][j] != 0 && board[i][j] == board[i+1][j] &&
 						board[i][j] == board[i+2][j] && board[i][j] == board[i+3][j]
 						) {
-					if (board[i][j] == Board.PLAYER_MAX) counter += winningValue;
+					if (board[i][j] == Board.PLAYER_MAX) counter++;
 				}
 			}
 		}
+		
+		counter = counter * winningValue;
 		// Each successful depth will have a higher heuristic score
 		return counter + (depth * 50);
 	}
@@ -127,7 +129,7 @@ public class HeuristicFunction {
 						board[i][j+1] == board[i][j+3]
 						) {
 					
-					if (board[i][j+1] == Board.PLAYER_MAX) counter ++;
+					if (board[i][j+1] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Col test _XXX_
@@ -136,7 +138,7 @@ public class HeuristicFunction {
 						board[i+1][j] == board[i+3][j]
 						) {
 					
-					if (board[i+1][j] == Board.PLAYER_MAX) counter ++;
+					if (board[i+1][j] == Board.PLAYER_MAX) counter++;
 				}
 			}
 		}
@@ -160,7 +162,7 @@ public class HeuristicFunction {
 						board[i][j+2] == 0
 						) {
 					
-					if (board[i][j+1] == Board.PLAYER_MAX) counter ++;
+					if (board[i][j+1] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Row test -XX--
@@ -170,7 +172,7 @@ public class HeuristicFunction {
 						board[i][j+3] == 0
 						) {
 					
-					if (board[i][j+1] == Board.PLAYER_MAX) counter ++;
+					if (board[i][j+1] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Row test --XX-
@@ -180,7 +182,7 @@ public class HeuristicFunction {
 						board[i][j+2] == board[i][j+3]
 						) {
 					
-					if (board[i][j+2] == Board.PLAYER_MAX) counter ++;
+					if (board[i][j+2] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Col test -X-X-
@@ -191,7 +193,7 @@ public class HeuristicFunction {
 						board[i+2][j] == 0
 						) {
 					
-					if (board[i+1][j] == Board.PLAYER_MAX) counter ++;
+					if (board[i+1][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// col test -XX--
@@ -202,7 +204,7 @@ public class HeuristicFunction {
 						board[i+3][j] == 0
 						) {
 					
-					if (board[i+1][j] == Board.PLAYER_MAX) counter ++;
+					if (board[i+1][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// col test --XX-
@@ -213,7 +215,7 @@ public class HeuristicFunction {
 						board[i+2][j] == board[i+3][j]
 						) {
 					
-					if (board[i+2][j] == Board.PLAYER_MAX) counter ++;
+					if (board[i+2][j] == Board.PLAYER_MAX) counter++;
 				}
 			}
 		}
@@ -235,7 +237,7 @@ public class HeuristicFunction {
 						board[i][j] == board[i][j+2] &&
 						board[i][j+3] == 0
 						) {					
-					if (board[i][j] == Board.PLAYER_MAX) counter += score;
+					if (board[i][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Row test _XXX
@@ -244,7 +246,7 @@ public class HeuristicFunction {
 						board[i][j+1] == board[i][j+3] &&
 						board[i][j] == 0
 						) {					
-					if (board[i][j+1] == Board.PLAYER_MAX) counter += score;
+					if (board[i][j+1] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Row test X_XX
@@ -253,7 +255,7 @@ public class HeuristicFunction {
 						board[i][j] == board[i][j+3] &&
 						board[i][j+1] == 0
 						) {					
-					if (board[i][j] == Board.PLAYER_MAX) counter += score;
+					if (board[i][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Row test XX_X
@@ -262,7 +264,7 @@ public class HeuristicFunction {
 						board[i][j] == board[i][j+3] &&
 						board[i][j+2] == 0
 						) {					
-					if (board[i][j] == Board.PLAYER_MAX) counter += score;
+					if (board[i][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Col test XXX_
@@ -271,7 +273,7 @@ public class HeuristicFunction {
 						board[i][j] == board[i+2][j] &&
 						board[i+3][j] == 0
 						) {					
-					if (board[i][j] == Board.PLAYER_MAX) counter += score;
+					if (board[i][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Col test _XXX
@@ -280,7 +282,7 @@ public class HeuristicFunction {
 						board[i+1][j] == board[i+3][j] &&
 						board[i][j] == 0
 						) {					
-					if (board[i+1][j] == Board.PLAYER_MAX) counter += score;
+					if (board[i+1][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Col test X_XX
@@ -289,7 +291,7 @@ public class HeuristicFunction {
 						board[i][j] == board[i+3][j] &&
 						board[i+1][j] == 0
 						) {					
-					if (board[i][j] == Board.PLAYER_MAX) counter += score;
+					if (board[i][j] == Board.PLAYER_MAX) counter++;
 				}
 				
 				// Col test XX_X
@@ -298,10 +300,11 @@ public class HeuristicFunction {
 						board[i][j] == board[i+3][j] &&
 						board[i+2][j] == 0
 						) {					
-					if (board[i][j] == Board.PLAYER_MAX) counter += score;
+					if (board[i][j] == Board.PLAYER_MAX) counter++;
 				}
 			}
 		}
+		counter = counter * score;
 		// Each successful depth will have a higher heuristic score
 		return counter + (depth * 50);
 	}
