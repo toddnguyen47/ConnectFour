@@ -154,7 +154,7 @@ public class MiniMax_MaxDepth {
 			int row = successors[i][0];
 			int col = successors[i][1];
 			mainBoard.placeOnBoard(row, col);
-			score[i] = h.getScoreSortMoves(mainBoard.getCurrentBoard(), 0);
+			score[i] = h.getScoreSortMoves(mainBoard.getCurrentBoard());
 			mainBoard.resetBoard(row, col);
 			scoreTaken[i] = false; // reset scoreValid array
 			
