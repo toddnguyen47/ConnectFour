@@ -198,6 +198,11 @@ public class MiniMax_IterativeDeepening {
 			orderedList[orderedListIndex++] = successors[desiredIndex];		
 		}
 		
+		// Random ordering?
+		if (nonZeroCounter > 2) {
+			// Random ordering?
+		}
+		
 		// Add back into the list
 		for (int i = 0; i < successorsSize; i++) {
 			if (!scoreTaken[i]) {
