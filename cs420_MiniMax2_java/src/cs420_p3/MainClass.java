@@ -2,14 +2,14 @@ package cs420_p3;
 
 import java.util.Scanner;
 
-import algorithms.MiniMax_MaxDepth;
+import algorithms.MiniMax_IterativeDeepening;
 
 public class MainClass {
 
 	Board board;
 	int move[];
 	Scanner sc;
-	MiniMax_MaxDepth mm_maxDepth;
+	MiniMax_IterativeDeepening mm_maxDepth;
 	
 	public MainClass() {
 		sc = new Scanner(System.in);
@@ -17,7 +17,7 @@ public class MainClass {
 		move[0] = 0; // first and second moves are "hard coded"
 		move[1] = 0; // first and second moves are "hard coded"
 		board = Board.getInstance();
-		mm_maxDepth = new MiniMax_MaxDepth(getSeconds());
+		mm_maxDepth = new MiniMax_IterativeDeepening(getSeconds());
 		
 		//board.setSpecificBoard();
 		
@@ -59,17 +59,27 @@ public class MainClass {
 	}
 	
 	private int[] getMove() {
+		int[] boardInput = {0,1,2,3,4,5,6,7};
 		int[] move = new int[2];
+		int tempRow, tempCol;
+		boolean correctInput = false;
 		String input;
 		do {
 			System.out.print("Enter move (Row/Column): ");
-			
 			input = sc.nextLine();
-			if (input.length() == 2) {
-				move[0] = Integer.parseInt(input.substring(0, 1));
-				move[1] = Integer.parseInt(input.substring(1, 2));
+			if (input.length() == 2) {			
+				tempRow = input.charAt(0) - 'a';
+				tempCol = input.charAt(1) - '1';
+				
+				if (tempRow >= 0 && tempRow <= Board.BOARD_SIZE - 1 &&
+						tempCol >= 0 && tempCol <= Board.BOARD_SIZE - 1) {
+					move[0] = boardInput[tempRow];
+					move[1] = boardInput[tempCol];
+					correctInput = true;
+				}
 			}
-		} while (input.length() != 2);
+			
+		} while (input.length() != 2 || !correctInput);
 		
 		return move;
 	}

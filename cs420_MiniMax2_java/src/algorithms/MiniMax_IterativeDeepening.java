@@ -4,7 +4,7 @@ import cs420_p3.Board;
 import successors.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class MiniMax_MaxDepth {
+public class MiniMax_IterativeDeepening {
 	private final int LARGE_POS = Integer.MAX_VALUE >> 2;
 	private final int LARGE_NEG = -(LARGE_POS);
 	private int curMaxDepth;
@@ -15,7 +15,7 @@ public class MiniMax_MaxDepth {
 	private long maxTime = 30000; 
 	private Successors succ;
 	
-	public MiniMax_MaxDepth(int maxTime) {
+	public MiniMax_IterativeDeepening(int maxTime) {
 		this.maxTime = maxTime * 1000;
 		mainBoard = Board.getInstance();
 		succ = new Spiral();

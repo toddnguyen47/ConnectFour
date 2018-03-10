@@ -12,6 +12,9 @@ public class Board {
 	private int numberOfPiecesPlaced;
 	private ArrayList<String> moveList;
 	
+	private char[] rowChar = {'a','b','c','d','e','f','g','h'};
+	private int[] colChar = {1,2,3,4,5,6,7,8};
+	
 	private int[][] board;
 	
 	private Board() {
@@ -75,19 +78,9 @@ public class Board {
 	}
 	
 	public void printBoard() {
-		System.out.println("      C o l u m n");
-		System.out.println("    0 1 2 3 4 5 6 7");
+		System.out.println("  1 2 3 4 5 6 7 8");
 		for (int i = 0; i < BOARD_SIZE; i++) {
-			if (i == 2) {
-				System.out.print("R " + i + " ");
-			} else if (i == 3) {
-				System.out.print("o " + i + " ");
-			} else if (i == 4) {
-				System.out.print("w " + i + " ");
-			}
-			else {
-				System.out.print("  " + i + " ");
-			}
+			System.out.print(rowChar[i] + " ");
 			
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				if (board[i][j] == PLAYER_MIN) {System.out.print("X ");}
@@ -181,7 +174,7 @@ public class Board {
 	}
 	
 	public void addToMoveList(int row, int col) {
-		moveList.add(String.valueOf(row) + String.valueOf(col));
+		moveList.add(rowChar[row] + String.valueOf(colChar[col]));
 	}
 	
 	public int getBoardSize() {return BOARD_SIZE;}
