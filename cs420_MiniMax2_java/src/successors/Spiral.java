@@ -1,8 +1,7 @@
 package successors;
 
 import java.util.ArrayList;
-
-import cs420_p3.Board;
+import mainBoard.Board;
 
 public class Spiral implements Successors {
 

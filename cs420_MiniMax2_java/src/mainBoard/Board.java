@@ -1,4 +1,4 @@
-package cs420_p3;
+package mainBoard;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
 package successors;
 
 import java.util.ArrayList;
-import cs420_p3.Board;
+import mainBoard.Board;
 
 public class RowByRow implements Successors {
 	int[][] board = Board.getInstance().getCurrentBoard();

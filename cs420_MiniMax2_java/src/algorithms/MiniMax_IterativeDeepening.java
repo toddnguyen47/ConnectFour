@@ -1,6 +1,6 @@
 package algorithms;
 
-import cs420_p3.Board;
+import mainBoard.Board;
 import successors.*;
 import java.util.concurrent.ThreadLocalRandom;
 

@@ -1,6 +1,4 @@
-Connect4/p3*
-Connect4/Debug
-Connect4/.vs/
-Connect4/obj
-ToddUI/*.exe
 .vscode/
+cs420_MiniMax2_java/bin
+cs420_MiniMax2_java/.classpath
+cs420_MiniMax2_java/.project
