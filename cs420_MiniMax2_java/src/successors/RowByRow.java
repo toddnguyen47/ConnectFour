@@ -31,4 +31,10 @@ public class RowByRow implements Successors {
 		return returnValue;
 	}
 
+	@Override
+	public int[][] getSuccessors(int row, int col, int prevBestRow, int prevBestCol) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

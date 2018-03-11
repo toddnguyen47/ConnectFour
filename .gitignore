@@ -2,3 +2,6 @@
 cs420_MiniMax2_java/bin
 cs420_MiniMax2_java/.classpath
 cs420_MiniMax2_java/.project
+cs420_MiniMax2_java/src/algorithms/*.class
+cs420_MiniMax2_java/src/mainBoard/*.class
+cs420_MiniMax2_java/src/successors/*.class

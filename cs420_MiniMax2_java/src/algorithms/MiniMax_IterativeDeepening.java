@@ -7,8 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MiniMax_IterativeDeepening {
 	private final int LARGE_POS = Integer.MAX_VALUE >> 2;
 	private final int LARGE_NEG = -(LARGE_POS);
+	private final int INIT_MAX_DEPTH = 3;
+	
 	private int curMaxDepth;
 	private int nodesGen;
+	private int returnMove[];
 	
 	private Board mainBoard;
 	private long startTime, endTime;
@@ -17,6 +20,7 @@ public class MiniMax_IterativeDeepening {
 	
 	public MiniMax_IterativeDeepening(int maxTime) {
 		this.maxTime = maxTime * 1000;
+		returnMove = new int[2];
 		mainBoard = Board.getInstance();
 		succ = new Spiral();
 	}
@@ -24,7 +28,7 @@ public class MiniMax_IterativeDeepening {
 	public int[] execute(int prevRow, int prevCol) {
 		startTime = System.currentTimeMillis();
 		int move[];
-		curMaxDepth = 3;
+		curMaxDepth = INIT_MAX_DEPTH;
 		
 		int numPieces = mainBoard.getNumOfPiecesPlayed();
 		if (numPieces < 3) {
@@ -32,10 +36,10 @@ public class MiniMax_IterativeDeepening {
 		}
 		else {
 			// Begin Iterative Deepening
-			int[] returnMove = new int[2];
 			while (true) {
 				nodesGen = 0;
-				move = MiniMax(LARGE_NEG, LARGE_POS, 0, prevRow, prevCol);
+				boolean isNewMaxDepth = (curMaxDepth > INIT_MAX_DEPTH);
+				move = MiniMax(LARGE_NEG, LARGE_POS, 0, prevRow, prevCol, isNewMaxDepth);
 				endTime = System.currentTimeMillis();
 				
 				if (endTime - startTime >= maxTime || curMaxDepth >= 8) {
@@ -78,15 +82,35 @@ public class MiniMax_IterativeDeepening {
 		return returnMove;
 	}
 	
-	private int[] MiniMax(int alpha, int beta, int depth, int prevRow, int prevCol) {
+	/**
+	 * Main alpha-beta MiniMax algorithm
+	 * @param alpha
+	 * @param beta
+	 * @param depth
+	 * @param prevRow - row of previous move
+	 * @param prevCol - col of previous move
+	 * @param isNewMaxDepth - if this is true, the first successor will be the move
+	 * from the previous iteration. This should only be true the first time a new
+	 * iteration is ran.
+	 * @return
+	 */
+	private int[] MiniMax(int alpha, int beta, int depth, int prevRow,
+			int prevCol, boolean isNewMaxDepth) {
 		nodesGen++;
 		int[][] board = mainBoard.getCurrentBoard();
 		if (cutOffTest(board, depth)) {
 			return new int[] {HeuristicFunction.getInstance().getScore(board, depth)};
 		}
 		
-		int successors[][] = succ.getSuccessors(prevRow, prevCol);
-		successors = sortMoves(successors, prevRow, prevCol);
+		int successors[][];
+		// Use the last iteration's best move as the starting child
+		if (isNewMaxDepth)
+			successors = succ.getSuccessors(prevRow, prevCol, returnMove[0], returnMove[1]);
+		else {
+			successors = succ.getSuccessors(prevRow, prevCol);
+		}
+		
+		successors = sortMoves(successors, prevRow, prevCol, isNewMaxDepth);
 		
 		// Max player's turn
 		if (mainBoard.maxTurn()) {
@@ -95,7 +119,7 @@ public class MiniMax_IterativeDeepening {
 				int row = successor[0];
 				int col = successor[1];
 				mainBoard.placeOnBoard(row, col); // Make the move
-				int[] result = MiniMax(alpha, beta, depth + 1, row, col);
+				int[] result = MiniMax(alpha, beta, depth + 1, row, col, false);
 				mainBoard.resetBoard(row, col); // Reset the move
 				if (result[0] > value[0]) {
 					value[0] = result[0];
@@ -114,7 +138,7 @@ public class MiniMax_IterativeDeepening {
 				int row = successor[0];
 				int col = successor[1];
 				mainBoard.placeOnBoard(row, col); // Make the move
-				int[] result = MiniMax(alpha, beta, depth + 1, row, col);
+				int[] result = MiniMax(alpha, beta, depth + 1, row, col, false);
 				mainBoard.resetBoard(row, col); // Reset the move
 				if (result[0] < value[0]) {
 					value[0] = result[0];
@@ -143,7 +167,7 @@ public class MiniMax_IterativeDeepening {
 		return endTime - startTime;
 	}
 	
-	private int[][] sortMoves(int[][] successors, int prevRow, int prevCol) {
+	private int[][] sortMoves(int[][] successors, int prevRow, int prevCol, boolean isNewMaxDepth) {
 		int successorsSize = successors.length;
 		int score[] = new int[successorsSize];
 		boolean scoreTaken[] = new boolean[successorsSize];
@@ -153,9 +177,15 @@ public class MiniMax_IterativeDeepening {
 		int[][] orderedList = new int[successorsSize][successorsSize];
 		int orderedListIndex = 0;
 		int nonZeroCounter = 0;
+		int beginIndex;
+		
+		if (isNewMaxDepth)
+			beginIndex = 1;
+		else	
+			beginIndex = 0;
 		
 		// Get scores
-		for (int i = 0; i < successorsSize; i++) {
+		for (int i = beginIndex; i < successorsSize; i++) {
 			int row = successors[i][0];
 			int col = successors[i][1];
 			mainBoard.placeOnBoard(row, col);
@@ -179,7 +209,7 @@ public class MiniMax_IterativeDeepening {
 		// Organize scores
 		for (int repeat = 0; repeat < topChildren; repeat++) {
 			int maxScore = -16380, minScore = 16380, desiredIndex = 0;
-			for (int j = 0; j < successorsSize; j++) {
+			for (int j = beginIndex; j < successorsSize; j++) {
 				if (mainBoard.maxTurn()) {
 					if (!scoreTaken[j] && score[j] > maxScore) {
 						desiredIndex = j;
@@ -204,7 +234,7 @@ public class MiniMax_IterativeDeepening {
 		}
 		
 		// Add back into the list
-		for (int i = 0; i < successorsSize; i++) {
+		for (int i = beginIndex; i < successorsSize; i++) {
 			if (!scoreTaken[i]) {
 				orderedList[orderedListIndex++] = successors[i];
 			}
