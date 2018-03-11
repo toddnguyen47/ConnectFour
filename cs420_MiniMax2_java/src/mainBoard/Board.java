@@ -40,14 +40,14 @@ public class Board {
 	}
 	
 	private int setInitialCounter() {
-		int zeroCounter = 0;
+		int numPiecesCounter = 0;
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			for (int j = 0; j < BOARD_SIZE; j++) {
-				if (board[i][j] != 0) zeroCounter++;
+				if (board[i][j] != 0) numPiecesCounter++;
 			}
 		}
 		
-		return zeroCounter;
+		return numPiecesCounter;
 	}
 	
 	public boolean placeOnBoard(int row, int col) {
