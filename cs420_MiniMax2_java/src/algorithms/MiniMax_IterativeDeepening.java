@@ -43,8 +43,10 @@ public class MiniMax_IterativeDeepening {
 				endTime = System.currentTimeMillis();
 				
 				if (endTime - startTime >= maxTime || curMaxDepth >= 8) {
-					System.out.println("Time elapsed: " + getTimeDiff(startTime, endTime) / 1000.0 +
+					System.out.println("\nTime elapsed: " + getTimeDiff(startTime, endTime) / 1000.0 +
 							" sec");
+					System.out.println("Did not reach ply " + curMaxDepth + ", " + nodesGen +
+							" nodes generated");
 					return new int[] {returnMove[0], returnMove[1]};
 				}
 				
@@ -104,13 +106,12 @@ public class MiniMax_IterativeDeepening {
 		
 		int successors[][];
 		// Use the last iteration's best move as the starting child
-		if (isNewMaxDepth)
+		if (isNewMaxDepth) {
 			successors = succ.getSuccessors(prevRow, prevCol, returnMove[0], returnMove[1]);
-		else {
+		} else {
 			successors = succ.getSuccessors(prevRow, prevCol);
+			successors = sortMoves(successors, prevRow, prevCol, isNewMaxDepth);
 		}
-		
-		successors = sortMoves(successors, prevRow, prevCol, isNewMaxDepth);
 		
 		// Max player's turn
 		if (mainBoard.maxTurn()) {
@@ -178,11 +179,7 @@ public class MiniMax_IterativeDeepening {
 		int orderedListIndex = 0;
 		int nonZeroCounter = 0;
 		int beginIndex;
-		
-		if (isNewMaxDepth)
-			beginIndex = 1;
-		else	
-			beginIndex = 0;
+		beginIndex = 0;
 		
 		// Get scores
 		for (int i = beginIndex; i < successorsSize; i++) {
