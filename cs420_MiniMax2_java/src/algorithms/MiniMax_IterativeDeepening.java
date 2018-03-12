@@ -8,6 +8,7 @@ public class MiniMax_IterativeDeepening {
 	private final int LARGE_POS = Integer.MAX_VALUE >> 2;
 	private final int LARGE_NEG = -(LARGE_POS);
 	private final int INIT_MAX_DEPTH = 3;
+	private final int FINAL_MAX_DEPTH = 8;
 	
 	private int curMaxDepth;
 	private int nodesGen;
@@ -42,11 +43,18 @@ public class MiniMax_IterativeDeepening {
 				move = MiniMax(LARGE_NEG, LARGE_POS, 0, prevRow, prevCol, isNewMaxDepth);
 				endTime = System.currentTimeMillis();
 				
-				if (endTime - startTime >= maxTime || curMaxDepth >= 8) {
+				// Return best move
+				if (endTime - startTime >= maxTime || curMaxDepth >= FINAL_MAX_DEPTH) {
 					System.out.println("\nTime elapsed: " + getTimeDiff(startTime, endTime) / 1000.0 +
 							" sec");
-					System.out.println("Did not reach ply " + curMaxDepth + ", " + nodesGen +
-							" nodes generated");
+					if (curMaxDepth < FINAL_MAX_DEPTH) {
+						System.out.println("Did not reach ply " + curMaxDepth + ", " + nodesGen +
+								" nodes generated");
+					} else {
+						System.out.println("ply: " + (curMaxDepth) + ", time: " + 
+								getTimeDiff(startTime, endTime) / 1000.0 + " sec, " + 
+								nodesGen + " nodes generated");
+					}
 					return new int[] {returnMove[0], returnMove[1]};
 				}
 				

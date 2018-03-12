@@ -65,7 +65,7 @@ public class MainClass {
 		boolean correctInput = false;
 		String input;
 		do {
-			System.out.print("Enter move (Row/Column): ");
+			System.out.print("Enter move. Enter -1 to quit: ");
 			input = sc.nextLine();
 			if (input.length() == 2) {			
 				tempRow = input.charAt(0) - 'a';
@@ -79,7 +79,12 @@ public class MainClass {
 				}
 			}
 			
-		} while (input.length() != 2 || !correctInput);
+		} while (!input.equalsIgnoreCase("-1") && (input.length() != 2 || !correctInput));
+		
+		if (input.equalsIgnoreCase("-1")) {
+			System.out.println("Thank you for playing!");
+			System.exit(0);
+		}
 		
 		return move;
 	}
