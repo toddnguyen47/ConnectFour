@@ -33,6 +33,7 @@ public class MainClass {
 			System.out.println("Number of tiles placed: " + board.getNumOfPiecesPlayed());
 			System.out.println("");
 			board.printBoard();
+						
 			// Min player's turn
 			if (!board.maxTurn()) {
 				do {

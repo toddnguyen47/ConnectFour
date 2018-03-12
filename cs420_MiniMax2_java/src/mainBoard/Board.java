@@ -177,6 +177,20 @@ public class Board {
 		moveList.add(rowChar[row] + String.valueOf(colChar[col]));
 	}
 	
+	public int[] getFirstMove() {
+		int firstMove[] = new int[2];
+		if (moveList.size() > 0) {
+			String first = moveList.get(0);
+			int row = first.charAt(0) - 'a';
+			int col = first.charAt(1) - '1';
+			firstMove = new int[] {row, col};			
+		} else {
+			firstMove = null;
+		}
+		
+		return firstMove;
+	}
+	
 	public int getBoardSize() {return BOARD_SIZE;}
 	public int[][] getCurrentBoard() {return board;}
 	public int getNumOfPiecesPlayed() {return numberOfPiecesPlaced;}

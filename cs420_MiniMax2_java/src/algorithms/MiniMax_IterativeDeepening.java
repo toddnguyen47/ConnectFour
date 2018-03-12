@@ -13,6 +13,7 @@ public class MiniMax_IterativeDeepening {
 	private int curMaxDepth;
 	private int nodesGen;
 	private int returnMove[];
+	private int numPieces;
 	
 	private Board mainBoard;
 	private long startTime, endTime;
@@ -31,7 +32,7 @@ public class MiniMax_IterativeDeepening {
 		int move[];
 		curMaxDepth = INIT_MAX_DEPTH;
 		
-		int numPieces = mainBoard.getNumOfPiecesPlayed();
+		numPieces = mainBoard.getNumOfPiecesPlayed();
 		if (numPieces < 3) {
 			return randomStartingMoves(prevRow, prevCol);
 		}
@@ -70,10 +71,42 @@ public class MiniMax_IterativeDeepening {
 	}
 	
 	private int[] randomStartingMoves(int prevRow, int prevCol) {
-		int moves[][];
+		int moves[][] = new int[0][0];
+		
+		// If first two moves
+		if (numPieces < 2) {
+			moves = new int[][] {{3,3}, {3,4}, {4,3}, {4,4}};
+		}
+		
+		else {
+			int[] startingMove = mainBoard.getFirstMove();
+			if (startingMove != null) {
+				int startingRow = startingMove[0];
+				int startingCol = startingMove[1];
+				int newRow = 0, newCol = 0;
+				
+				if (startingRow == 3) {newRow = startingRow + 1;}
+				else if (startingRow == 4) {newRow = startingRow - 1;}
+				
+				if (startingCol == 3) {newCol = startingCol + 1;}
+				else if (startingCol == 4) {newCol = startingCol - 1;}
+				
+				moves = new int[][] {{startingRow, newCol}, {newRow, startingCol}};
+			}
+		}
+		
+		int[] returnMoveT;
+		boolean validMove = false;
+		do {
+			int randomNum = ThreadLocalRandom.current().nextInt(0, moves.length);
+			returnMoveT = moves[randomNum];
+			validMove = mainBoard.isValidMove(returnMoveT[0], returnMoveT[1]);
+		} while (!validMove);
+		return returnMoveT;
+		
 		// If prevMov and prevCol was NOT in the center
-		if (prevRow < 3 || prevRow > 4 || prevCol < 3 || prevCol > 4) {
-			moves= new int[][] {{3,3}, {3,4}, {4,3}, {4,4}};
+		/*if (prevRow < 3 || prevRow > 4 || prevCol < 3 || prevCol > 4) {
+			
 		}
 		// If prevMov and prevCol WAS in the center
 		else {
@@ -81,15 +114,7 @@ public class MiniMax_IterativeDeepening {
 							 {prevRow, prevCol -1},
 							 {prevRow + 1, prevCol},
 							 {prevRow - 1, prevCol}};
-		}
-		int[] returnMove;
-		boolean validMove = false;
-		do {
-			int randomNum = ThreadLocalRandom.current().nextInt(0, 4);
-			returnMove = moves[randomNum];
-			validMove = mainBoard.isValidMove(returnMove[0], returnMove[1]);
-		} while (!validMove);
-		return returnMove;
+		}*/
 	}
 	
 	/**
