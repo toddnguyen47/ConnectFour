@@ -162,17 +162,6 @@ public class Board {
 		return (board[row][col] == 0);
 	}
 	
-	public void flipBoard() {
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			for (int j = 0; j < BOARD_SIZE; j++) {
-				if (board[i][j] == PLAYER_MAX)
-					board[i][j] = PLAYER_MIN;
-				else if (board[i][j] == PLAYER_MIN)
-					board[i][j] = PLAYER_MAX;
-			}
-		}
-	}
-	
 	public void addToMoveList(int row, int col) {
 		moveList.add(rowChar[row] + String.valueOf(colChar[col]));
 	}
