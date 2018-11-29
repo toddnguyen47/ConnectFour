@@ -7,11 +7,12 @@ Make sure `javac` and `java` is in your PATH variable.
 # How to compile
 Type in the following command in your terminal while you are at the src folder
 ```
-javac algorithms/*.java mainBoard/*.java successors/*.java
+javac -d `bin` src/algorithms/*.java src/mainBoard/*.java src/successors/*.java
 ```
 
 # How to Run
-Type in the following command in your terminal while you are at the src folder
+1. Go into the `bin` folder
+2. Type in the following command in your terminal
 ```
-java mainBoard/MainClass
+java mainBoard.MainClass
 ```
