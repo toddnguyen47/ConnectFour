@@ -7,7 +7,7 @@ Make sure `javac` and `java` is in your PATH variable.
 # How to compile
 Type in the following command in your terminal while you are at the src folder
 ```
-javac -d `bin` src/algorithms/*.java src/mainBoard/*.java src/successors/*.java
+javac -d "bin" src/algorithms/*.java src/mainBoard/*.java src/successors/*.java
 ```
 
 # How to Run
